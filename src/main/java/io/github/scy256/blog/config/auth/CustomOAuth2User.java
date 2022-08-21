@@ -1,6 +1,7 @@
 package io.github.scy256.blog.config.auth;
 
 import io.github.scy256.blog.domain.user.User;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
+@Getter
 @RequiredArgsConstructor
 public class CustomOAuth2User implements OAuth2User {
 

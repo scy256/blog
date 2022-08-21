@@ -3,6 +3,7 @@ package io.github.scy256.blog.domain.user;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.github.scy256.blog.domain.BaseTimeEntity;
 
+import io.github.scy256.blog.domain.category.Category;
 import io.github.scy256.blog.domain.post.Post;
 import lombok.Builder;
 import lombok.Getter;
@@ -40,6 +41,10 @@ public class User extends BaseTimeEntity {
     private Role role;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OrderBy("id desc")
+    private List<Category> categories;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @OrderBy("id desc")
     private List<Post> posts;
 

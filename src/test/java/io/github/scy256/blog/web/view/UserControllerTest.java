@@ -17,7 +17,7 @@ public class UserControllerTest {
     private TestRestTemplate testRestTemplate;
 
     @Test
-    public void testLogin() {
+    public void testLoginPage() {
         String body = testRestTemplate.getForObject("/user/login", String.class);
         assertThat(body).contains("Blog");
     }

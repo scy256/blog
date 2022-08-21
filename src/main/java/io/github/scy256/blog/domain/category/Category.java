@@ -2,12 +2,15 @@ package io.github.scy256.blog.domain.category;
 
 import io.github.scy256.blog.domain.BaseTimeEntity;
 
+import io.github.scy256.blog.domain.comment.Comment;
+import io.github.scy256.blog.domain.post.Post;
 import io.github.scy256.blog.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -28,6 +31,9 @@ public class Category extends BaseTimeEntity {
     @JoinColumn(name = "userId", nullable = false)
     @ManyToOne
     private User user;
+
+    @OneToMany(mappedBy = "category", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    private List<Post> posts;
 
     public Category update(String name, Topic topic) {
         this.name = name;
