@@ -1,6 +1,5 @@
 package io.github.scy256.blog.web.dto;
 
-import io.github.scy256.blog.domain.post.Post;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

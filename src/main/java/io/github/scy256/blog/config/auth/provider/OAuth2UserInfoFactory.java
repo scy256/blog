@@ -15,7 +15,6 @@ public class OAuth2UserInfoFactory {
             return new KakaoUserInfo(attributes);
         if(registrationId.equals("naver"))
             return new NaverUserInfo((Map<String, Object>) attributes.get("response"));
-
         return null;
     }
 

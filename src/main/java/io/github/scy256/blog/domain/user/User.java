@@ -1,10 +1,9 @@
 package io.github.scy256.blog.domain.user;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.github.scy256.blog.domain.BaseTimeEntity;
-
 import io.github.scy256.blog.domain.category.Category;
 import io.github.scy256.blog.domain.post.Post;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

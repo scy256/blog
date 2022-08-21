@@ -1,7 +1,7 @@
 package io.github.scy256.blog.web.rest;
 
-import io.github.scy256.blog.service.PostService;
-import io.github.scy256.blog.web.dto.PostSaveRequestDto;
+import io.github.scy256.blog.service.CategoryService;
+import io.github.scy256.blog.web.dto.CategorySaveRequestDto;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,17 +16,17 @@ import lombok.RequiredArgsConstructor;
 import javax.validation.Valid;
 
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/posts")
+@RequestMapping("/api/v1/categories")
 @RestController
-public class PostApiController {
+public class CategoryApiController {
 
-    private final PostService postService;
+    private final CategoryService categoryService;
 
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody @Valid PostSaveRequestDto postSaveRequestDto, BindingResult bindingResult) {
+    public ResponseEntity<?> save(@RequestBody @Valid CategorySaveRequestDto categorySaveRequestDto, BindingResult bindingResult) {
         if(bindingResult.hasErrors())
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        postService.save(postSaveRequestDto);
+        categoryService.save(categorySaveRequestDto);
         return new ResponseEntity<>(null, HttpStatus.CREATED);
     }
 

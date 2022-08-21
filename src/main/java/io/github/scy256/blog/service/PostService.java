@@ -3,19 +3,18 @@ package io.github.scy256.blog.service;
 import io.github.scy256.blog.domain.category.Category;
 import io.github.scy256.blog.domain.category.CategoryRepository;
 import io.github.scy256.blog.domain.post.Post;
-import io.github.scy256.blog.domain.post.PostRepository;
-
-import io.github.scy256.blog.domain.user.User;
-import io.github.scy256.blog.domain.user.UserRepository;
+import io.github.scy256.blog.domain.post.PostRepository;;
 import io.github.scy256.blog.handler.exception.EntityNotFoundException;
+import io.github.scy256.blog.util.AuthenticationUtils;
 import io.github.scy256.blog.web.dto.PostResponseDto;
 import io.github.scy256.blog.web.dto.PostSaveRequestDto;
-import lombok.RequiredArgsConstructor;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -49,17 +48,15 @@ public class PostService {
     }
 
     @Transactional
-    public void save(PostSaveRequestDto postSaveRequestDto, User user) {
+    public void save(PostSaveRequestDto postSaveRequestDto) {
         Category category = categoryRepository.findById(postSaveRequestDto.getCategoryId())
                             .orElseThrow(() -> new EntityNotFoundException("카테고리를 찾을 수 없습니다"));
-
         Post post = Post.builder()
                         .title(postSaveRequestDto.getTitle())
                         .content(postSaveRequestDto.getContent())
                         .category(category)
-                        .user(user)
+                        .user(AuthenticationUtils.getUserFromAuthentication())
                         .build();
-
         postRepository.save(post);
     }
 

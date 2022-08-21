@@ -9,16 +9,18 @@
 		min-width: 100vw;
 	    min-height: 100vh;
 	}
-	.error{color:red; vertical-align : top; font-size:10px;}
 </style>
 
-<select style="width:400px" id="underline_select" class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
+<select style="width:400px" id="underline_select"
+        class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
     {{#category}}
-    <option value="{{id}}">{{name}}</option>
+        <option value="{{id}}">{{name}}</option>
     {{/category}}
 </select>
 <div class="z-0 mb-6 w-full group">
-    <input style="width:800px" type="text" name="title" i class="block px-8 py-4 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-gray-500 focus:outline-none focus:ring-0 focus:border-gray-200 peer" placeholder="제목을 입력하세요" required />
+    <input style="width:800px" type="text" name="title" i
+           class="block px-8 py-4 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-gray-500 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
+           placeholder="제목을 입력하세요" required/>
 </div>
 
 <div class="flex justify-center">
@@ -27,7 +29,10 @@
 		</textarea>
     <br/>
 </div>
-<button type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">게시</button>
+<button type="button"
+        class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
+    게시
+</button>
 
 <script>
         ClassicEditor
@@ -40,6 +45,7 @@
             .catch( error => {
                 console.error( error );
             } );
+
 </script>
 
 

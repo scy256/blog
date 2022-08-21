@@ -10,8 +10,11 @@ import java.io.Serializable;
 public class SessionUser implements Serializable {
 
     private Long id;
+
     private String name;
+
     private String email;
+
     private String profileImage;
 
     public SessionUser(User user) {

@@ -1,10 +1,12 @@
 package io.github.scy256.blog.config;
 
 import io.github.scy256.blog.config.auth.LoginUserArgumentResolver;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 

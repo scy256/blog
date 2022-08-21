@@ -1,8 +1,6 @@
 {{>/layout/header}}
 
 <main class="min-h-screen w-full bg-gray-100 text-gray-700" x-data="layout">
-
-
     <div class="flex">
         <aside style="height:300vh" class="flex w-96 flex-col space-y-2 border-r-2 border-gray-200 bg-white p-2"
                x-show="asideOpen">
@@ -10,16 +8,24 @@
                 <input placeholder="검색어를 입력하세요" href="#"
                        class="flex items-center space-x-1 border border-gray-400 rounded-md px-2 py-3 hover:bg-gray-100 hover:text-blue-600">
             </form>
+            {{#isOwner}}
+                <a href="/categories/setting"
+                   class="flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-gray-100 hover:text-blue-600">
+                    <span class="text-2xl"><i class="bx bx-home"></i></span>
+                    <span>카테고리 관리 <span style="vertical-align: middle" class="material-icons">settings</span></span>
+                </a>
+            {{/isOwner}}
             <a href="#" class="flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-gray-100 hover:text-blue-600">
                 <span class="text-2xl"><i class="bx bx-home"></i></span>
                 <span>전체 <span class="text-gray-500">({{user.posts.size}})</span></span>
             </a>
 
             {{#user.categories}}
-            <a href="#" class="flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-gray-100 hover:text-blue-600">
-                <span class="text-2xl"><i class="bx bx-home"></i></span>
-                <span>{{name}} <span class="text-gray-500">({{posts.size}})</span></span>
-            </a>
+                <a href="#"
+                   class="flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-gray-100 hover:text-blue-600">
+                    <span class="text-2xl"><i class="bx bx-home"></i></span>
+                    <span>{{name}} <span class="text-gray-500">({{posts.size}})</span></span>
+                </a>
             {{/user.categories}}
 
         </aside>
@@ -82,8 +88,10 @@
                                 </a>
                             {{/posts.first}}
                             {{^posts.first}}
-                                <a href="?page={{previousNumber}}" class="inline-flex items-center py-2 px-4 text-sm font-medium text-white bg-gray-700 rounded-lg hover:bg-gray-800 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                                    Previous
+                                <a href="?page={{previousNumber}}" class="inline-flex items-center py-2 px-4 text-sm
+                                font-medium text-white bg-gray-700 rounded-lg hover:bg-gray-800 dark:bg-gray-800
+                                dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                                Previous
                                 </a>
                             {{/posts.first}}
                             {{#posts.last}}
@@ -92,16 +100,18 @@
                                 </a>
                             {{/posts.last}}
                             {{^posts.last}}
-                                <a href="?page={{nextNumber}}" class="inline-flex items-center py-2 px-4 ml-3 text-sm font-medium text-white bg-gray-700 rounded-lg hover:bg-gray-800 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                                    Next
+                                <a href="?page={{nextNumber}}" class="inline-flex items-center py-2 px-4 ml-3 text-sm
+                                font-medium text-white bg-gray-700 rounded-lg hover:bg-gray-800 dark:bg-gray-800
+                                dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                                Next
                                 </a>
                             {{/posts.last}}
                         </div>
-                        </div>
                     </div>
                 </div>
-            </section>
-        </div>
+            </div>
+        </section>
+    </div>
     </div>
 </main>
 

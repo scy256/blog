@@ -1,10 +1,9 @@
 package io.github.scy256.blog.domain.category;
 
 import io.github.scy256.blog.domain.BaseTimeEntity;
-
-import io.github.scy256.blog.domain.comment.Comment;
 import io.github.scy256.blog.domain.post.Post;
 import io.github.scy256.blog.domain.user.User;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

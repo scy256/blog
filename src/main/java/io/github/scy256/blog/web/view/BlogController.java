@@ -1,9 +1,11 @@
 package io.github.scy256.blog.web.view;
 
+import io.github.scy256.blog.config.auth.LoginUser;
+import io.github.scy256.blog.config.auth.SessionUser;
 import io.github.scy256.blog.service.PostService;
 import io.github.scy256.blog.service.UserService;
-
 import io.github.scy256.blog.web.dto.PostResponseDto;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -29,20 +31,16 @@ public class BlogController {
     }
 
     @GetMapping("/blog/{userId}")
-    public String getBlog(@PathVariable Long userId, Model model, @PageableDefault(size = 10, direction = Sort.Direction.DESC) Pageable pageable) {
+    public String getBlog(@PathVariable Long userId, Model model, @LoginUser SessionUser sessionUser, @PageableDefault(size = 10, direction = Sort.Direction.DESC) Pageable pageable) {
         Page<PostResponseDto> posts = postService.findAllByUserId(userId, pageable);
 
         model.addAttribute("user", userService.findById(userId));
         model.addAttribute("posts", posts);
         model.addAttribute("nextNumber", posts.getNumber() + 1);
         model.addAttribute("previousNumber", posts.getNumber() - 1);
+        model.addAttribute("isOwner", userId.equals(sessionUser.getId()));
 
         return "user/blog";
-    }
-
-    @GetMapping("/ck")
-    public String test() {
-        return "post/writing";
     }
 
 }

@@ -4,9 +4,11 @@ import io.github.scy256.blog.domain.user.User;
 import io.github.scy256.blog.domain.user.UserRepository;
 import io.github.scy256.blog.handler.exception.EntityNotFoundException;
 import io.github.scy256.blog.web.dto.UserResponseDto;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Service

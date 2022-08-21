@@ -2,16 +2,13 @@ package io.github.scy256.blog.web.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.scy256.blog.config.auth.CustomOAuth2User;
-import io.github.scy256.blog.config.auth.SessionUser;
 import io.github.scy256.blog.domain.category.Category;
 import io.github.scy256.blog.domain.category.CategoryRepository;
 import io.github.scy256.blog.domain.category.Topic;
-import io.github.scy256.blog.domain.post.Post;
-import io.github.scy256.blog.domain.post.PostRepository;
 import io.github.scy256.blog.domain.user.Role;
 import io.github.scy256.blog.domain.user.User;
 import io.github.scy256.blog.domain.user.UserRepository;
-import io.github.scy256.blog.web.dto.PostSaveRequestDto;
+import io.github.scy256.blog.web.dto.CategorySaveRequestDto;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,12 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockHttpSession;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.security.test.context.support.WithSecurityContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
@@ -42,7 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class PostApiControllerTest {
+public class CategoryApiControllerTest {
 
     @LocalServerPort
     private int port;
@@ -52,9 +44,6 @@ public class PostApiControllerTest {
 
     @Autowired
     private CategoryRepository categoryRepository;
-
-    @Autowired
-    private PostRepository postRepository;
 
     @Autowired
     private WebApplicationContext context;
@@ -79,38 +68,27 @@ public class PostApiControllerTest {
 
     @WithMockUser
     @Test
-    public void testSavingPost() throws Exception{
+    public void testSavingCategory() throws Exception{
         User user = userRepository.findById(1L).get();
-
-        Category category = categoryRepository.save(
-                Category.builder()
-                        .name("test")
-                        .user(user)
-                        .topic(Topic.NONE)
-                        .build()
-        );
-
-        PostSaveRequestDto postSaveRequestDto = PostSaveRequestDto.builder()
-                                                    .title("test")
-                                                    .content("test")
-                                                    .categoryId(1L)
-                                                    .build();
-
-        String url = "http://localhost:" + port + "/api/v1/posts";
+        CategorySaveRequestDto categorySaveRequestDto = CategorySaveRequestDto.builder()
+                                                            .name("test")
+                                                            .topic("스포츠")
+                                                            .build();
+        String url = "http://localhost:" + port + "/api/v1/categories";
 
         mvc.perform(post(url)
                         .with(oauth2Login()
                                 .oauth2User(new CustomOAuth2User(userRepository.findById(1L).get(),new HashMap<>())))
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
-                        .content(new ObjectMapper().writeValueAsString(postSaveRequestDto)))
+                        .content(new ObjectMapper().writeValueAsString(categorySaveRequestDto)))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isCreated());
 
-        Post post = postRepository.findById(1L).get();
+        Category category = categoryRepository.findById(1L).get();
 
-        assertThat(post.getTitle()).isEqualTo("test");
-        assertThat(post.getTopic()).isEqualTo(Topic.NONE);
-        assertThat(post.getUser().getId()).isEqualTo(1L);
+        assertThat(category.getName()).isEqualTo("test");
+        assertThat(category.getTopic()).isEqualTo(Topic.SPORTS);
+        assertThat(category.getUser().getId()).isEqualTo(user.getId());
     }
 
 }
