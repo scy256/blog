@@ -6,8 +6,8 @@ import io.github.scy256.blog.domain.post.Post;
 import io.github.scy256.blog.domain.post.PostRepository;;
 import io.github.scy256.blog.handler.exception.EntityNotFoundException;
 import io.github.scy256.blog.util.AuthenticationUtils;
-import io.github.scy256.blog.web.dto.PostResponseDto;
-import io.github.scy256.blog.web.dto.PostSaveRequestDto;
+import io.github.scy256.blog.web.dto.post.PostResponseDto;
+import io.github.scy256.blog.web.dto.post.PostSaveRequestDto;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

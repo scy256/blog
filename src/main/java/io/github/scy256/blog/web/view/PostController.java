@@ -3,7 +3,7 @@ package io.github.scy256.blog.web.view;
 import io.github.scy256.blog.config.auth.LoginUser;
 import io.github.scy256.blog.config.auth.SessionUser;
 import io.github.scy256.blog.service.CategoryService;
-import io.github.scy256.blog.web.dto.CategoryResponseDto;
+import io.github.scy256.blog.web.dto.category.CategoryResponseDto;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

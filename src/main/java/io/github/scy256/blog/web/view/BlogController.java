@@ -4,7 +4,7 @@ import io.github.scy256.blog.config.auth.LoginUser;
 import io.github.scy256.blog.config.auth.SessionUser;
 import io.github.scy256.blog.service.PostService;
 import io.github.scy256.blog.service.UserService;
-import io.github.scy256.blog.web.dto.PostResponseDto;
+import io.github.scy256.blog.web.dto.post.PostResponseDto;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -14,7 +14,7 @@ public enum Topic {
     SPORTS("스포츠"),
     ART("미술"),
     TRAVEL("여행"),
-    IT("IT, 컴퓨터");
+    IT("IT");
 
     private final String title;
 

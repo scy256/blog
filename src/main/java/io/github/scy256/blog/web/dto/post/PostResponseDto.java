@@ -1,4 +1,4 @@
-package io.github.scy256.blog.web.dto;
+package io.github.scy256.blog.web.dto.post;
 
 import io.github.scy256.blog.domain.category.Category;
 import io.github.scy256.blog.domain.post.Post;
@@ -13,15 +13,10 @@ import java.time.LocalDateTime;
 public class PostResponseDto {
 
     private Long id;
-
     private String title;
-
     private String content;
-
     private User user;
-
     private Category category;
-
     private LocalDateTime createdDate;
 
     @Builder

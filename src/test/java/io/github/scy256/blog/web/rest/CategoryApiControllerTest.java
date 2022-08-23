@@ -8,7 +8,7 @@ import io.github.scy256.blog.domain.category.Topic;
 import io.github.scy256.blog.domain.user.Role;
 import io.github.scy256.blog.domain.user.User;
 import io.github.scy256.blog.domain.user.UserRepository;
-import io.github.scy256.blog.web.dto.CategorySaveRequestDto;
+import io.github.scy256.blog.web.dto.category.CategorySaveRequestDto;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

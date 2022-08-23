@@ -1,4 +1,4 @@
-package io.github.scy256.blog.web.dto;
+package io.github.scy256.blog.web.dto.category;
 
 import io.github.scy256.blog.domain.category.Category;
 import io.github.scy256.blog.domain.category.Topic;
@@ -12,11 +12,8 @@ import java.util.List;
 public class CategoryResponseDto {
 
     private Long id;
-
     private String name;
-
     private Topic topic;
-
     private List<Post> posts;
 
     public CategoryResponseDto(Category category) {

@@ -1,7 +1,7 @@
 package io.github.scy256.blog.web.rest;
 
 import io.github.scy256.blog.service.PostService;
-import io.github.scy256.blog.web.dto.PostSaveRequestDto;
+import io.github.scy256.blog.web.dto.post.PostSaveRequestDto;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

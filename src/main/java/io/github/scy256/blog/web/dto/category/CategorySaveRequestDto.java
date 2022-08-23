@@ -1,4 +1,4 @@
-package io.github.scy256.blog.web.dto;
+package io.github.scy256.blog.web.dto.category;
 
 import io.github.scy256.blog.domain.category.Category;
 import io.github.scy256.blog.domain.category.Topic;
@@ -22,6 +22,7 @@ public class CategorySaveRequestDto {
     @NotBlank
     private String name;
 
+    @NotBlank
     private String topic;
 
     public Category toEntity() {
