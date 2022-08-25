@@ -4,9 +4,11 @@
     <h1 class="text-lg font-bold">카테고리 수정</h1>
 </div>
 
+<input type="hidden" id="id" value="{{category.id}}">
+
 <div class="pt-8 flex justify-center">
     <div class="bg-white mb-6">
-        <input type="text" id="name"
+        <input value="{{category.name}}" type="text" id="name"
                class="w-96 block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                placeholder="카테고리 이름을 입력하세요" required/>
     </div>
@@ -25,14 +27,14 @@
 <div class="py-8 flex justify-center">
     <button id="btn-category-update" type="button"
             class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
-        추가
+        수정
     </button>
     <button type="button"
             class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
         취소
     </button>
 </div>
-<script src="../js/blog.js"></script>
+<script src="/js/blog.js"></script>
 <script src="https://unpkg.com/flowbite@1.5.2/dist/flowbite.js"></script>
 </body>
 </html>

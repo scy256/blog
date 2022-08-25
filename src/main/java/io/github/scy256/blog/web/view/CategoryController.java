@@ -7,6 +7,7 @@ import io.github.scy256.blog.web.dto.category.CategoryResponseDto;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.RequiredArgsConstructor;
@@ -30,6 +31,13 @@ public class CategoryController {
     @GetMapping("creating")
     public String getCreating() {
         return "category/creating";
+    }
+
+    @GetMapping("edit/{id}")
+    public String getUpdating(@PathVariable Long id, Model model) {
+        CategoryResponseDto categoryResponseDto = categoryService.findById(id);
+        model.addAttribute("category", categoryResponseDto);
+        return "category/edit";
     }
 
 }

@@ -23,6 +23,13 @@ public class CategoryService {
     private final CategoryRepository categoryRepository;
 
     @Transactional(readOnly = true)
+    public CategoryResponseDto findById(Long id) {
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("카테고리를 찾을 수 없습니다"));
+        return new CategoryResponseDto(category);
+    }
+
+    @Transactional(readOnly = true)
     public List<CategoryResponseDto> findAllByUserId(Long userId){
         return categoryRepository.findAllByUserId(userId).stream()
                 .map(CategoryResponseDto::new)
@@ -43,6 +50,11 @@ public class CategoryService {
         Topic topic = Topic.findByTitle(categoryUpdateRequestDto.getTopic());
 
         category.update(name, topic);
+    }
+
+    @Transactional
+    public void deleteById(Long id) {
+        categoryRepository.deleteById(id);
     }
 
     @Transactional(readOnly = true)

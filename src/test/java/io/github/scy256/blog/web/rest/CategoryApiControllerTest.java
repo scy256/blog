@@ -9,6 +9,7 @@ import io.github.scy256.blog.domain.user.Role;
 import io.github.scy256.blog.domain.user.User;
 import io.github.scy256.blog.domain.user.UserRepository;
 import io.github.scy256.blog.web.dto.category.CategorySaveRequestDto;
+import io.github.scy256.blog.web.dto.category.CategoryUpdateRequestDto;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,11 +26,12 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.HashMap;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.oauth2Login;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
@@ -90,5 +92,61 @@ public class CategoryApiControllerTest {
         assertThat(category.getTopic()).isEqualTo(Topic.SPORTS);
         assertThat(category.getUser().getId()).isEqualTo(user.getId());
     }
+    @WithMockUser
+    @Test
+    public void testUpdatingCategory() throws Exception{
+        User user = userRepository.findById(1L).get();
+        Category entity = Category.builder()
+                .name("test")
+                .user(user)
+                .topic(Topic.SPORTS)
+                .build();
+        categoryRepository.save(entity);
+
+        CategoryUpdateRequestDto categoryUpdateRequestDto = new CategoryUpdateRequestDto("test2","미술");
+
+        String url = "http://localhost:" + port + "/api/v1/categories/" + 1L;
+
+        mvc.perform(put(url)
+                        .with(oauth2Login()
+                                .oauth2User(new CustomOAuth2User(userRepository.findById(1L).get(),new HashMap<>())))
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .content(new ObjectMapper().writeValueAsString(categoryUpdateRequestDto)))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isCreated());
+
+        Category category = categoryRepository.findById(1L).get();
+
+        assertThat(category.getName()).isEqualTo("test2");
+        assertThat(category.getTopic()).isEqualTo(Topic.ART);
+        assertThat(category.getUser().getId()).isEqualTo(user.getId());
+    }
+
+    @WithMockUser
+    @Test
+    public void testDeletingCategory() throws Exception{
+        User user = userRepository.findById(1L).get();
+        Category entity = Category.builder()
+                .name("test")
+                .user(user)
+                .topic(Topic.SPORTS)
+                .build();
+        categoryRepository.save(entity);
+
+        String url = "http://localhost:" + port + "/api/v1/categories/" + 1L;
+
+        mvc.perform(delete(url)
+                        .with(oauth2Login()
+                                .oauth2User(new CustomOAuth2User(userRepository.findById(1L).get(),new HashMap<>())))
+                        .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isNoContent());
+
+        Optional<Category> category = categoryRepository.findById(1L);
+        assertThat(category.isPresent()).isEqualTo(false);
+
+    }
+
+
 
 }
