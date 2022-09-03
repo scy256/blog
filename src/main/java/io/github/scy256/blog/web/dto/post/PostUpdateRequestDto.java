@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostSaveRequestDto {
+public class PostUpdateRequestDto {
 
     @Size(max = 100)
     @NotBlank

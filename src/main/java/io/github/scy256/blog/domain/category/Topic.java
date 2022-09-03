@@ -3,8 +3,6 @@ package io.github.scy256.blog.domain.category;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-import java.util.Arrays;
-
 @Getter
 @RequiredArgsConstructor
 public enum Topic {
@@ -23,7 +21,6 @@ public enum Topic {
             if(topic.getTitle().equals(title))
                 return topic;
         }
-
         throw new IllegalArgumentException("존재하지 않는 관심사입니다");
     }
 

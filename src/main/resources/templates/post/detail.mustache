@@ -1,0 +1,107 @@
+{{>/layout/header}}
+
+<input id="id" value="{{dto.id}}">
+<div style="margin: 0 auto; width:40%;">
+    <br>
+    <span class="text-gray-400" style="font-size:15px;">{{dto.category.name}}</span>
+    <br>
+    <h1 style="font-size:40px; margin:0px;">{{dto.title}}
+        {{#dto.isOwner}}
+        <button data-dropdown-toggle="dropdown" class="items-center py-2 pr-4 pl-3 w-full font-medium text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-gray-400 dark:hover:text-white dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent">
+            <span class="material-icons">
+				expand_more
+			</span>
+        </button>
+        <!-- Dropdown menu -->
+        <div id="dropdown" class="hidden z-10 w-44 font-normal bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
+            <ul class="py-1 text-sm text-gray-700 dark:text-gray-400" aria-labelledby="dropdownLargeButton">
+                <li>
+                    <a href="/posts/editing/{{dto.id}}" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">수정</a>
+                </li>
+                <li>
+                    <a href="#" id="btn-post-delete" class="btn block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                        삭제
+                    </a>
+                </li>
+            </ul>
+        </div>
+        {{/dto.isOwner}}
+    </h1>
+
+    <span style="line-height:50%"><br></span>
+    <div>
+        <a href="/blog/{{dto.user.id}}">
+            <img style="display:inline; vertical-align : middle;" class="w-7 h-7 rounded-full" src="{{dto.user.profileImage}}" alt="user photo">
+            <span style="vertical-align : top;">
+						{{dto.user.name}}
+		</span>
+        </a>
+        <span class="text-gray-400" style="vertical-align : top;">
+			{{dto.createdDate.year}}년 {{dto.createdDate.monthValue}}월 {{dto.createdDate.dayOfMonth}}일
+		</span>
+        <span class="text-gray-400" style="vertical-align : top;">
+				조회수 {{dto.views}}회
+        </span>
+    </div>
+    <hr>
+    <br>
+    <div class="ck-content">
+       {{{dto.content}}}
+    </div>
+    <br>
+    <hr/>
+    <br>
+    <span style="font-size:15px;">댓글 0개</span>
+    <p>&nbsp;</p>
+    <form method="post" action="/post/${post.id}/comment">
+        <div class="mb-6">
+            <textarea type="text" rows="4" name="content" placeholder="댓글을 입력해주세요.."
+                      class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"></textarea>
+            <p>&nbsp;</p>
+            <div class="flex justify-end">
+                <button type="submit"
+                        class="submit text-white bg-gray-900 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center ">
+                    댓글
+                </button>
+            </div>
+        </div>
+    </form>
+    <p>&nbsp;</p>
+
+    <div>
+        <hr>
+        <br>
+        <div>
+            <a href="/user/profile/${comment.user.id }">
+			<span class="material-icons md-12">
+							account_circle
+			</span>
+                <span style="vertical-align : top;">
+							댓글 작성자
+			</span>
+                <span class="text-gray-400" style="vertical-align : top;">
+				2022년 8월 28일
+			</span>
+            </a>
+
+            <form style="display:inline;" action="/post/${post.id}/comment/${comment.id}" method="delete">
+                <button>
+						<span class="material-icons">
+							delete
+						</span>
+                </button>
+            </form>
+
+        </div>
+        <br>
+        <span>
+		  내용
+		</span>
+        <p>&nbsp;</p>
+    </div>
+</div>
+
+<script src="/js/blog.js"></script>
+<script src="https://unpkg.com/flowbite@1.5.2/dist/flowbite.js"></script>
+</body>
+</html>

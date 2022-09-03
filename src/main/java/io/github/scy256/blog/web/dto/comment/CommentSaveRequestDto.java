@@ -1,4 +1,4 @@
-package io.github.scy256.blog.web.dto.post;
+package io.github.scy256.blog.web.dto.comment;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,16 +12,10 @@ import javax.validation.constraints.Size;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostSaveRequestDto {
+public class CommentSaveRequestDto {
 
-    @Size(max = 100)
-    @NotBlank
-    private String title;
-
+    @Size(max = 300)
     @NotBlank
     private String content;
-
-    @NotBlank
-    private String category;
 
 }

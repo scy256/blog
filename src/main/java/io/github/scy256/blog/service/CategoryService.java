@@ -3,11 +3,13 @@ package io.github.scy256.blog.service;
 import io.github.scy256.blog.domain.category.Category;
 import io.github.scy256.blog.domain.category.CategoryRepository;
 import io.github.scy256.blog.domain.category.Topic;
+import io.github.scy256.blog.domain.user.User;
 import io.github.scy256.blog.handler.exception.EntityNotFoundException;
+import io.github.scy256.blog.util.AuthenticationUtils;
 import io.github.scy256.blog.web.dto.category.CategoryResponseDto;
 import io.github.scy256.blog.web.dto.category.CategorySaveRequestDto;
-
 import io.github.scy256.blog.web.dto.category.CategoryUpdateRequestDto;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +32,12 @@ public class CategoryService {
     }
 
     @Transactional(readOnly = true)
+    public List<CategoryResponseDto> findAllByUserFromAuthentication() {
+        User user = AuthenticationUtils.getUserFromAuthentication();
+        return findAllByUserId(user.getId());
+    }
+
+    @Transactional(readOnly = true)
     public List<CategoryResponseDto> findAllByUserId(Long userId){
         return categoryRepository.findAllByUserId(userId).stream()
                 .map(CategoryResponseDto::new)
@@ -48,20 +56,22 @@ public class CategoryService {
                 .orElseThrow(() -> new EntityNotFoundException("카테고리를 찾을 수 없습니다"));
         String name = categoryUpdateRequestDto.getName();
         Topic topic = Topic.findByTitle(categoryUpdateRequestDto.getTopic());
-
         category.update(name, topic);
     }
 
     @Transactional
     public void deleteById(Long id) {
-        categoryRepository.deleteById(id);
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("카테고리를 찾을 수 없습니다"));
+        categoryRepository.delete(category);
     }
 
     @Transactional(readOnly = true)
-    public boolean isOwner(Long categoryId, Long userId) {
+    public boolean isOwner(Long categoryId) {
+        User user = AuthenticationUtils.getUserFromAuthentication();
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new EntityNotFoundException("카테고리를 찾을 수 없습니다"));
-        return category.getUser().getId() == userId;
+        return category.getUser().getId() == user.getId();
     }
 
 }
