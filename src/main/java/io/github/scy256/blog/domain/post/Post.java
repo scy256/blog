@@ -40,6 +40,9 @@ public class Post extends BaseEntity {
     @Column(nullable = false)
     private Topic topic;
 
+    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Comment> comments;
+
     @Builder
     public Post(String title, String content, User user, Category category, Long views) {
         this.title = title;

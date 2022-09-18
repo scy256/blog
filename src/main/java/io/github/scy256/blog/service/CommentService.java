@@ -6,10 +6,16 @@ import io.github.scy256.blog.domain.post.Post;
 import io.github.scy256.blog.domain.post.PostRepository;
 import io.github.scy256.blog.handler.exception.EntityNotFoundException;
 import io.github.scy256.blog.util.AuthenticationUtils;
+import io.github.scy256.blog.web.dto.comment.CommentResponseDto;
 import io.github.scy256.blog.web.dto.comment.CommentSaveRequestDto;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import lombok.RequiredArgsConstructor;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -18,6 +24,13 @@ public class CommentService {
     private final CommentRepository commentRepository;
 
     private final PostRepository postRepository;
+
+    @Transactional(readOnly = true)
+    public List<CommentResponseDto> findAllByPostId(Long postId) {
+        return commentRepository.findAllByPostId(postId).stream()
+                .map(CommentResponseDto::new)
+                .collect(Collectors.toList());
+    }
 
     @Transactional
     public void save(Long postId, CommentSaveRequestDto commentSaveRequestDto) {
@@ -28,7 +41,6 @@ public class CommentService {
                 .post(post)
                 .user(AuthenticationUtils.getUserFromAuthentication())
                 .build();
-
         commentRepository.save(comment);
     }
 

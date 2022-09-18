@@ -1,8 +1,10 @@
 package io.github.scy256.blog.web.view;
 
 import io.github.scy256.blog.service.CategoryService;
+import io.github.scy256.blog.service.CommentService;
 import io.github.scy256.blog.service.PostService;
 import io.github.scy256.blog.web.dto.category.CategoryResponseDto;
+import io.github.scy256.blog.web.dto.comment.CommentResponseDto;
 import io.github.scy256.blog.web.dto.post.PostResponseDto;
 
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,8 @@ public class PostController {
 
     private final CategoryService categoryService;
 
+    private final CommentService commentService;
+
     @GetMapping("writing")
     public String getWriting(Model model) {
         List<CategoryResponseDto> categories = categoryService.findAllByUserFromAuthentication();
@@ -33,10 +37,8 @@ public class PostController {
     public String getEditing(@PathVariable  Long id,Model model) {
         List<CategoryResponseDto> categories = categoryService.findAllByUserFromAuthentication();
         PostResponseDto postResponseDto = postService.findById(id);
-
         model.addAttribute("categories", categories);
         model.addAttribute("dto", postResponseDto);
-
         return "post/editing";
     }
 
@@ -44,6 +46,8 @@ public class PostController {
     public String getPost(@PathVariable Long id, Model model) {
         postService.increaseViews(id);
         PostResponseDto dto = postService.findById(id);
+        List<CommentResponseDto> comments = commentService.findAllByPostId(id);
+        model.addAttribute("comments", comments);
         model.addAttribute("dto", dto);
         return "post/detail";
     }

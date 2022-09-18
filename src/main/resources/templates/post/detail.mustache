@@ -51,53 +51,50 @@
     <br>
     <hr/>
     <br>
-    <span style="font-size:15px;">댓글 0개</span>
+    <span style="font-size:15px;">댓글 {{comments.size}}개</span>
     <p>&nbsp;</p>
-    <form method="post" action="/post/${post.id}/comment">
+
         <div class="mb-6">
-            <textarea type="text" rows="4" name="content" placeholder="댓글을 입력해주세요.."
+            <textarea type="text" rows="4" id="content" placeholder="댓글을 입력해주세요.."
                       class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"></textarea>
             <p>&nbsp;</p>
             <div class="flex justify-end">
-                <button type="submit"
+                <button id="btn-comment-save" type="button"
                         class="submit text-white bg-gray-900 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center ">
                     댓글
                 </button>
             </div>
         </div>
-    </form>
+
     <p>&nbsp;</p>
 
     <div>
+        {{#comments}}
         <hr>
         <br>
         <div>
-            <a href="/user/profile/${comment.user.id }">
-			<span class="material-icons md-12">
-							account_circle
-			</span>
+            <a href="/blog/{{user.id}}">
+                <img style="display:inline; vertical-align : middle;" class="w-7 h-7 rounded-full" src="{{user.profileImage}}" alt="user photo">
                 <span style="vertical-align : top;">
-							댓글 작성자
-			</span>
-                <span class="text-gray-400" style="vertical-align : top;">
-				2022년 8월 28일
+							{{user.name}}
 			</span>
             </a>
+                <span class="text-gray-400" style="vertical-align : top;">
+				{{createdDate.year}}년 {{createdDate.monthValue}}월 {{createdDate.dayOfMonth}}일
+			</span>
+            {{#isOwner}}
+                <button class="bg-red-600 text-white rounded-lg px-1" onclick="comment.delete({{dto.id}}, {{id}})">삭제</button>
+            {{/isOwner}}
 
-            <form style="display:inline;" action="/post/${post.id}/comment/${comment.id}" method="delete">
-                <button>
-						<span class="material-icons">
-							delete
-						</span>
-                </button>
-            </form>
 
         </div>
         <br>
         <span>
-		  내용
+		  {{content}}
 		</span>
         <p>&nbsp;</p>
+
+        {{/comments}}
     </div>
 </div>
 

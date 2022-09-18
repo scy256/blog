@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.web.SecurityFilterChain;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
 
 @RequiredArgsConstructor
 @Configuration

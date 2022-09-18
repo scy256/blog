@@ -7,7 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 public class AuthenticationUtils {
 
-    public static User getUserFromAuthentication() {
+    public static final User getUserFromAuthentication() {
         return ((CustomOAuth2User) (SecurityContextHolder.getContext().getAuthentication().getPrincipal())).getUser();
     }
 

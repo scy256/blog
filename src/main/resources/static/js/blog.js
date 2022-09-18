@@ -8,10 +8,6 @@ var category = {
         $('#btn-category-update').on('click', function () {
             _this.update();
         });
-
-        $('#btn-category-delete').on('click', function () {
-            _this.delete();
-        });
     },
 
     save : function () {
@@ -50,8 +46,8 @@ var category = {
             alert(JSON.stringify(error));
         });
     },
-    delete : function () {
-        var id = $('#id').val();
+    delete : function (id) {
+
 
         $.ajax({
             type: 'DELETE',
@@ -137,5 +133,49 @@ var post = {
 
 };
 
+var comment = {
+    init : function () {
+        var _this = this;
+        $('#btn-comment-save').on('click', function () {
+            _this.save();
+        });
+
+    },
+
+    save : function () {
+        var data = {
+            content: $('#content').val(),
+        };
+
+        var id = $('#id').val();
+
+        $.ajax({
+            type: 'POST',
+            url: '/api/v1/posts/' + id + '/comments',
+            contentType:'application/json; charset=utf-8',
+            data: JSON.stringify(data)
+        }).done(function() {
+            window.location.href = '/posts/' + id;
+        }).fail(function (error) {
+            alert(JSON.stringify(error));
+        });
+    },
+
+    delete : function (postId, commentId) {
+
+        $.ajax({
+            type: 'DELETE',
+            url: '/api/v1/posts/comments/' + commentId,
+            contentType:'application/json; charset=utf-8'
+        }).done(function() {
+            window.location.href = '/posts/' + postId;
+        }).fail(function (error) {
+            alert(JSON.stringify(error));
+        });
+    }
+
+};
+
+comment.init();
 post.init();
 category.init();
