@@ -1,6 +1,7 @@
 package io.github.scy256.blog.domain.post;
 
 import io.github.scy256.blog.domain.BaseEntity;
+import io.github.scy256.blog.domain.blog.Blog;
 import io.github.scy256.blog.domain.category.Category;
 import io.github.scy256.blog.domain.category.Topic;
 import io.github.scy256.blog.domain.comment.Comment;
@@ -9,6 +10,8 @@ import io.github.scy256.blog.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.List;
@@ -36,11 +39,15 @@ public class Post extends BaseEntity {
     @ManyToOne
     private Category category;
 
+    @JoinColumn(name = "blogId", nullable = false)
+    @ManyToOne
+    private Blog blog;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Topic topic;
 
-    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Comment> comments;
 
     @Builder
@@ -48,6 +55,7 @@ public class Post extends BaseEntity {
         this.title = title;
         this.content = content;
         this.user = user;
+        this.blog = user.getBlog();
         this.category = category;
         this.views = views;
         this.topic = category.getTopic();

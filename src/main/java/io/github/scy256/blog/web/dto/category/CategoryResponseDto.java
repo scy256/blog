@@ -4,6 +4,7 @@ import io.github.scy256.blog.domain.category.Category;
 import io.github.scy256.blog.domain.category.Topic;
 import io.github.scy256.blog.domain.post.Post;
 
+import io.github.scy256.blog.domain.user.User;
 import lombok.Getter;
 
 import java.util.List;
@@ -16,11 +17,14 @@ public class CategoryResponseDto {
     private Topic topic;
     private List<Post> posts;
 
+    private User user;
+
     public CategoryResponseDto(Category category) {
         this.id = category.getId();
         this.name = category.getName();
         this.topic = category.getTopic();
         this.posts = category.getPosts();
+        this.user = category.getUser();
     }
 
 }

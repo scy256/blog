@@ -11,7 +11,7 @@
 	}
 </style>
 
-<input type="hidden" id="id" value="{{dto.id}}">
+<input type="hidden" id="id" value="{{post.id}}">
 <div class="flex justify-center">
     <select style="width:500px" id="category"
             class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
@@ -21,14 +21,14 @@
     </select>
 </div>
 <div class="flex py-8  justify-center">
-    <input style="width:500px" type="text" value="{{dto.title}}" id="title" i
+    <input style="width:500px" type="text" value="{{post.title}}" id="title" i
            class="block px-8 py-4 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-gray-500 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
            placeholder="제목을 입력하세요" required/>
 </div>
 
 <div class="flex justify-center">
 		<textarea name="content" id="content">
-            {{{dto.content}}}
+            {{{post.content}}}
 		</textarea>
     <br/>
 </div>

@@ -2,11 +2,13 @@ package io.github.scy256.blog.domain.user;
 
 import io.github.scy256.blog.domain.BaseEntity;
 
+import io.github.scy256.blog.domain.blog.Blog;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+
 
 @NoArgsConstructor
 @Getter
@@ -31,6 +33,9 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
+
+    @OneToOne(mappedBy = "user")
+    private Blog blog;
 
     @Builder
     public User(String name, String email, String profileImage, String provider, String providerId, Role role) {

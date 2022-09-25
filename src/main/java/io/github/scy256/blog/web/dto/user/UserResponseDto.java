@@ -16,14 +16,17 @@ public class UserResponseDto {
     private String name;
     private String profileImage;
     private String role;
-    private Boolean isOwner;
 
     public UserResponseDto(User user) {
         this.id = user.getId();
         this.name = user.getName();
         this.profileImage = user.getProfileImage();
         this.role = user.getRoleKey();
-        this.isOwner = id == AuthenticationUtils.getUserFromAuthentication().getId();
+    }
+
+    public Boolean isOwner() {
+        boolean isOwner = id == AuthenticationUtils.getUserFromAuthentication().getId();
+        return isOwner;
     }
 
 }

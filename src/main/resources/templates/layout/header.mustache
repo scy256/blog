@@ -16,7 +16,7 @@
         <a href="/" class="flex items-center">
             <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Blog</span>
         </a>
-        {{#sessionUser}}
+        {{#account}}
             <div class="flex items-center md:order-2">
                 <button type="button"
                         class="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
@@ -43,7 +43,7 @@
                     </div>
                     <ul class="py-1" aria-labelledby="user-menu-button">
                         <li>
-                            <a href="/blog/{{id}}"
+                            <a href="/blog"
                                class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">블로그 </a>
                         </li>
                         <li>
@@ -68,9 +68,9 @@
                     </svg>
                 </button>
             </div>
-        {{/sessionUser}}
+        {{/account}}
 
-        {{^sessionUser}}
+        {{^account}}
             <div class="flex items-center md:order-2">
                 <a href="/user/login">
                     <button type="button"
@@ -79,7 +79,7 @@
                     </button>
                 </a>
             </div>
-        {{/sessionUser}}
+        {{/account}}
 
         <div class="hidden justify-between items-center w-full md:flex md:w-auto md:order-1" id="mobile-menu-2">
             <ul class="flex flex-col p-4 mt-4 bg-gray-50 rounded-lg border border-gray-100 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">

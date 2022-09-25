@@ -1,6 +1,7 @@
 package io.github.scy256.blog.web.dto.post;
 
 import io.github.scy256.blog.domain.category.Category;
+import io.github.scy256.blog.domain.comment.Comment;
 import io.github.scy256.blog.domain.post.Post;
 import io.github.scy256.blog.domain.user.User;
 import io.github.scy256.blog.util.AuthenticationUtils;
@@ -10,6 +11,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 public class PostResponseDto {
@@ -17,11 +19,10 @@ public class PostResponseDto {
     private Long id;
     private String title;
     private String content;
-    private String preview;
     private Long views;
     private User user;
+    private List<Comment> comments;
     private Category category;
-    private Boolean isOwner;
     private LocalDateTime createdDate;
 
     @Builder
@@ -29,12 +30,20 @@ public class PostResponseDto {
         this.id = post.getId();
         this.title = post.getTitle();
         this.content = post.getContent();
-        this.preview = PreviewUtils.getPreview(content);
         this.views = post.getViews();
         this.user = post.getUser();
-        this.isOwner = user.getId() == AuthenticationUtils.getUserFromAuthentication().getId();
+        this.comments = post.getComments();
         this.createdDate = post.getCreatedDate();
         this.category = post.getCategory();
+    }
+
+    public Boolean isOwner() {
+        boolean isOwner = user.getId() == AuthenticationUtils.getUserFromAuthentication().getId();
+        return isOwner;
+    }
+
+    public String getPreview() {
+        return PreviewUtils.getPreview(content);
     }
 
 }

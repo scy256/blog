@@ -9,9 +9,9 @@ import io.github.scy256.blog.handler.exception.EntityNotFoundException;
 import io.github.scy256.blog.util.AuthenticationUtils;
 import io.github.scy256.blog.web.dto.post.PostResponseDto;
 import io.github.scy256.blog.web.dto.post.PostSaveRequestDto;
-
 import io.github.scy256.blog.web.dto.post.PostUpdateRequestDto;
 import io.github.scy256.blog.web.dto.post.PostsResponseDto;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -35,23 +35,37 @@ public class PostService {
     }
 
     @Transactional(readOnly = true)
-    public PostsResponseDto findAllByUserId(Long userId, Pageable pageable) {
-        Page<Post> posts = postRepository.findAllByUserId(userId, pageable);
-        Page<PostResponseDto> dto = posts.map(post -> new PostResponseDto(post));
-        return new PostsResponseDto(dto);
+    public PostsResponseDto findAllByBlogId(Long id, Pageable pageable) {
+        Page<Post> posts = postRepository.findAllByBlogId(id, pageable);
+        return new PostsResponseDto(posts);
+    }
+
+    @Transactional(readOnly = true)
+    public PostsResponseDto findAllByCategoryName(Long id, String category, Pageable pageable) {
+        Page<Post> posts = postRepository.findAllByBlogIdAndCategoryName(id,category, pageable);
+        return new PostsResponseDto(posts);
+    }
+
+    @Transactional(readOnly = true)
+    public PostsResponseDto search(Long id, String title , Pageable pageable) {
+        Page<Post> posts = postRepository.findAllByTitleContainingAndBlogId(title, id, pageable);
+        return new PostsResponseDto(posts);
     }
 
     @Transactional
     public void save(PostSaveRequestDto postSaveRequestDto) {
         Category category = categoryRepository.findByName(postSaveRequestDto.getCategory())
                             .orElseThrow(() -> new EntityNotFoundException("카테고리를 찾을 수 없습니다"));
+        User user = AuthenticationUtils.getUserFromAuthentication();
+
         Post post = Post.builder()
-                        .title(postSaveRequestDto.getTitle())
-                        .content(postSaveRequestDto.getContent())
-                        .views(0L)
-                        .category(category)
-                        .user(AuthenticationUtils.getUserFromAuthentication())
-                        .build();
+                .title(postSaveRequestDto.getTitle())
+                .content(postSaveRequestDto.getContent())
+                .views(0L)
+                .category(category)
+                .user(user)
+                .build();
+
         postRepository.save(post);
     }
 

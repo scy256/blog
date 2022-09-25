@@ -1,26 +1,21 @@
 package io.github.scy256.blog.web.view;
 
-import io.github.scy256.blog.service.CategoryService;
-import io.github.scy256.blog.service.PostService;
-import io.github.scy256.blog.service.UserService;
-import io.github.scy256.blog.util.AuthenticationUtils;
 
-import io.github.scy256.blog.web.dto.category.CategoryResponseDto;
-import io.github.scy256.blog.web.dto.post.PostResponseDto;
+import io.github.scy256.blog.config.auth.account.LoginAccount;
+import io.github.scy256.blog.config.auth.account.SessionAccount;
+import io.github.scy256.blog.service.BlogService;
+import io.github.scy256.blog.service.PostService;
+import io.github.scy256.blog.web.dto.blog.BlogResponseDto;
 import io.github.scy256.blog.web.dto.post.PostsResponseDto;
-import io.github.scy256.blog.web.dto.user.UserResponseDto;
-import org.springframework.data.domain.Page;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-
-import lombok.RequiredArgsConstructor;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
@@ -28,9 +23,7 @@ public class BlogController {
 
     private final PostService postService;
 
-    private final UserService userService;
-
-    private final CategoryService categoryService;
+    private final BlogService blogService;
 
     @GetMapping("/")
     public String getIndex() {
@@ -38,20 +31,42 @@ public class BlogController {
     }
 
     @GetMapping("/blog")
-    public String getUserBlog() {
-        Long id = AuthenticationUtils.getUserFromAuthentication().getId();
-        return "redirect:/blog/" + id;
+    public String getSessionBlog(@LoginAccount SessionAccount sessionAccount) {
+        return "redirect:/blog/" + sessionAccount.getBlogId();
     }
 
-    @GetMapping("/blog/{userId}")
-    public String getBlog(@PathVariable Long userId, @PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
-        UserResponseDto user = userService.findById(userId);
-        List<CategoryResponseDto> categories = categoryService.findAllByUserId(userId);
-        PostsResponseDto dto = postService.findAllByUserId(userId, pageable);
+    @GetMapping("/blog/{id}")
+    public String getBlog(@PathVariable Long id, @PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
+        BlogResponseDto blog = blogService.findById(id);
+        PostsResponseDto posts = postService.findAllByBlogId(id, pageable);
 
-        model.addAttribute("user", user);
-        model.addAttribute("categories", categories);
-        model.addAttribute("dto", dto);
+        model.addAttribute("blog", blog);
+        model.addAttribute("posts", posts);
+        model.addAttribute("search", "전체");
+
+        return "user/blog";
+    }
+
+    @GetMapping("/blog/{id}/search/category")
+    public String searchCategory(@PathVariable Long id, @Param("category") String category, @PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
+        BlogResponseDto blog = blogService.findById(id);
+        PostsResponseDto posts = postService.findAllByCategoryName(id, category, pageable);
+
+        model.addAttribute("blog", blog);
+        model.addAttribute("posts", posts);
+        model.addAttribute("search", category);
+
+        return "user/blog";
+    }
+
+    @GetMapping("/blog/{id}/search")
+    public String searchTitle(@PathVariable Long id, @Param("keyword") String keyword, @PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
+        BlogResponseDto blog = blogService.findById(id);
+        PostsResponseDto posts = postService.search(id, keyword, pageable);
+
+        model.addAttribute("blog", blog);
+        model.addAttribute("posts", posts);
+        model.addAttribute("search", keyword);
 
         return "user/blog";
     }

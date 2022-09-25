@@ -4,12 +4,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
-
 public interface PostRepository extends JpaRepository<Post, Long> {
 
-    Page<Post> findAllByUserId(Long userId, Pageable pageable);
+    Page<Post> findAllByBlogId(Long blogId, Pageable pageable);
 
-    List<Post> findAllByUserId(Long userId);
+    Page<Post> findAllByBlogIdAndCategoryName(Long blogId, String categoryName, Pageable pageable);
+
+    Page<Post> findAllByTitleContainingAndBlogId(String title,Long blogId, Pageable pageable);
 
 }

@@ -1,6 +1,7 @@
 package io.github.scy256.blog.domain.category;
 
 import io.github.scy256.blog.domain.BaseEntity;
+import io.github.scy256.blog.domain.blog.Blog;
 import io.github.scy256.blog.domain.post.Post;
 import io.github.scy256.blog.domain.user.User;
 
@@ -23,11 +24,15 @@ public class Category extends BaseEntity {
     @Column(nullable = false)
     private Topic topic;
 
+    @JoinColumn(name = "blogId", nullable = false)
+    @ManyToOne
+    private Blog blog;
+
     @JoinColumn(name = "userId", nullable = false)
     @ManyToOne
     private User user;
 
-    @OneToMany(mappedBy = "category", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Post> posts;
 
     @Builder
@@ -35,6 +40,7 @@ public class Category extends BaseEntity {
         this.name = name;
         this.topic = topic;
         this.user = user;
+        this.blog = user.getBlog();
     }
 
     public Category update(String name, Topic topic) {

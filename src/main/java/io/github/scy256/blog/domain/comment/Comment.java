@@ -3,6 +3,7 @@ package io.github.scy256.blog.domain.comment;
 import io.github.scy256.blog.domain.BaseEntity;
 import io.github.scy256.blog.domain.post.Post;
 import io.github.scy256.blog.domain.user.User;
+import io.github.scy256.blog.util.AuthenticationUtils;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -31,6 +32,11 @@ public class Comment extends BaseEntity {
         this.content = content;
         this.post = post;
         this.user = user;
+    }
+
+    public Boolean isOwner() {
+        User sessionUser = AuthenticationUtils.getUserFromAuthentication();
+        return user.getId() == sessionUser.getId();
     }
 
 }

@@ -32,8 +32,8 @@ public class CategoryController {
 
     @GetMapping("edit/{id}")
     public String getUpdating(@PathVariable Long id, Model model) {
-        CategoryResponseDto categoryResponseDto = categoryService.findById(id);
-        model.addAttribute("category", categoryResponseDto);
+        CategoryResponseDto category = categoryService.findById(id);
+        model.addAttribute("category", category);
         return "category/edit";
     }
 

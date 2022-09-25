@@ -2,6 +2,7 @@ package io.github.scy256.blog.web.dto.category;
 
 import io.github.scy256.blog.domain.category.Category;
 import io.github.scy256.blog.domain.category.Topic;
+import io.github.scy256.blog.domain.user.User;
 import io.github.scy256.blog.util.AuthenticationUtils;
 
 import lombok.AllArgsConstructor;
@@ -26,11 +27,14 @@ public class CategorySaveRequestDto {
     private String topic;
 
     public Category toEntity() {
-        return Category.builder()
-                        .name(getName())
-                        .topic(Topic.findByTitle(topic))
-                        .user(AuthenticationUtils.getUserFromAuthentication())
-                        .build();
+        User user = AuthenticationUtils.getUserFromAuthentication();
+
+        return Category
+                .builder()
+                .name(getName())
+                .topic(Topic.findByTitle(topic))
+                .user(user)
+                .build();
     }
 
 }

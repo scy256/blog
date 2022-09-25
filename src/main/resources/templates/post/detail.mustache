@@ -1,12 +1,12 @@
 {{>/layout/header}}
 
-<input id="id" value="{{dto.id}}">
+<input id="id" value="{{post.id}}">
 <div style="margin: 0 auto; width:40%;">
     <br>
-    <span class="text-gray-400" style="font-size:15px;">{{dto.category.name}}</span>
+    <span class="text-gray-400" style="font-size:15px;">{{post.category.name}}</span>
     <br>
-    <h1 style="font-size:40px; margin:0px;">{{dto.title}}
-        {{#dto.isOwner}}
+    <h1 style="font-size:40px; margin:0px;">{{post.title}}
+        {{#post.isOwner}}
         <button data-dropdown-toggle="dropdown" class="items-center py-2 pr-4 pl-3 w-full font-medium text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-gray-400 dark:hover:text-white dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent">
             <span class="material-icons">
 				expand_more
@@ -16,7 +16,7 @@
         <div id="dropdown" class="hidden z-10 w-44 font-normal bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
             <ul class="py-1 text-sm text-gray-700 dark:text-gray-400" aria-labelledby="dropdownLargeButton">
                 <li>
-                    <a href="/posts/editing/{{dto.id}}" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">수정</a>
+                    <a href="/posts/editi/{{post.id}}" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">수정</a>
                 </li>
                 <li>
                     <a href="#" id="btn-post-delete" class="btn block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
@@ -25,33 +25,33 @@
                 </li>
             </ul>
         </div>
-        {{/dto.isOwner}}
+        {{/post.isOwner}}
     </h1>
 
     <span style="line-height:50%"><br></span>
     <div>
-        <a href="/blog/{{dto.user.id}}">
-            <img style="display:inline; vertical-align : middle;" class="w-7 h-7 rounded-full" src="{{dto.user.profileImage}}" alt="user photo">
+        <a href="/blog/{{post.user.id}}">
+            <img style="display:inline; vertical-align : middle;" class="w-7 h-7 rounded-full" src="{{post.user.profileImage}}" alt="user photo">
             <span style="vertical-align : top;">
-						{{dto.user.name}}
+						{{post.user.name}}
 		</span>
         </a>
         <span class="text-gray-400" style="vertical-align : top;">
-			{{dto.createdDate.year}}년 {{dto.createdDate.monthValue}}월 {{dto.createdDate.dayOfMonth}}일
+			{{post.createdDate.year}}년 {{post.createdDate.monthValue}}월 {{post.createdDate.dayOfMonth}}일
 		</span>
         <span class="text-gray-400" style="vertical-align : top;">
-				조회수 {{dto.views}}회
+				조회수 {{post.views}}회
         </span>
     </div>
     <hr>
     <br>
     <div class="ck-content">
-       {{{dto.content}}}
+       {{{post.content}}}
     </div>
     <br>
     <hr/>
     <br>
-    <span style="font-size:15px;">댓글 {{comments.size}}개</span>
+    <span style="font-size:15px;">댓글 {{post.comments.size}}개</span>
     <p>&nbsp;</p>
 
         <div class="mb-6">
@@ -69,7 +69,7 @@
     <p>&nbsp;</p>
 
     <div>
-        {{#comments}}
+        {{#post.comments}}
         <hr>
         <br>
         <div>
@@ -83,18 +83,15 @@
 				{{createdDate.year}}년 {{createdDate.monthValue}}월 {{createdDate.dayOfMonth}}일
 			</span>
             {{#isOwner}}
-                <button class="bg-red-600 text-white rounded-lg px-1" onclick="comment.delete({{dto.id}}, {{id}})">삭제</button>
+                <button class="bg-red-600 text-white rounded-lg px-1" onclick="comment.delete({{post.id}}, {{id}})">삭제</button>
             {{/isOwner}}
-
-
         </div>
         <br>
         <span>
 		  {{content}}
 		</span>
         <p>&nbsp;</p>
-
-        {{/comments}}
+        {{/post.comments}}
     </div>
 </div>
 

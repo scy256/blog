@@ -1,22 +1,19 @@
 package io.github.scy256.blog.web.view;
 
+
 import io.github.scy256.blog.service.CategoryService;
-import io.github.scy256.blog.service.CommentService;
 import io.github.scy256.blog.service.PostService;
 import io.github.scy256.blog.web.dto.category.CategoryResponseDto;
-import io.github.scy256.blog.web.dto.comment.CommentResponseDto;
 import io.github.scy256.blog.web.dto.post.PostResponseDto;
-
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
 @RequiredArgsConstructor
-@RequestMapping("posts")
 @Controller
 public class PostController {
 
@@ -24,31 +21,29 @@ public class PostController {
 
     private final CategoryService categoryService;
 
-    private final CommentService commentService;
-
-    @GetMapping("writing")
+    @GetMapping("/posts/writing")
     public String getWriting(Model model) {
         List<CategoryResponseDto> categories = categoryService.findAllByUserFromAuthentication();
         model.addAttribute("categories", categories);
         return "post/writing";
     }
 
-    @GetMapping("editing/{id}")
-    public String getEditing(@PathVariable  Long id,Model model) {
+    @GetMapping("/posts/edit/{id}")
+    public String getEdit(@PathVariable Long id, Model model) {
         List<CategoryResponseDto> categories = categoryService.findAllByUserFromAuthentication();
-        PostResponseDto postResponseDto = postService.findById(id);
+        PostResponseDto post = postService.findById(id);
+
         model.addAttribute("categories", categories);
-        model.addAttribute("dto", postResponseDto);
-        return "post/editing";
+        model.addAttribute("post", post);
+
+        return "post/edit";
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/posts/{id}")
     public String getPost(@PathVariable Long id, Model model) {
         postService.increaseViews(id);
-        PostResponseDto dto = postService.findById(id);
-        List<CommentResponseDto> comments = commentService.findAllByPostId(id);
-        model.addAttribute("comments", comments);
-        model.addAttribute("dto", dto);
+        PostResponseDto post = postService.findById(id);
+        model.addAttribute("post", post);
         return "post/detail";
     }
 
